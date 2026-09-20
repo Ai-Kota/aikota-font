@@ -1,0 +1,20 @@
+{
+  "name": "aikota-B",
+  "version": "0.5",
+  "route": "B fixed v2",
+  "chars": 350,
+  "files": {
+    "aikota350_fixed.ttf": {
+      "size": 65816,
+      "sha256": "27b73ecb438985a7d5709cf1036a438d2648e3b4afd7b17449451c751758cb31"
+    },
+    "aikota350_fixed_hinted.ttf": {
+      "size": 107308,
+      "sha256": "187d406edbd76bcfecfde62d1a83215cd028774fa07461e28a06480cb0592abd"
+    },
+    "aikota350_fixed.woff2": {
+      "size": 49032,
+      "sha256": "d10d16d9bf272093a3f834ed7e221c4356b15541bc029912bb5b6c7d69c39e90"
+    }
+  }
+}

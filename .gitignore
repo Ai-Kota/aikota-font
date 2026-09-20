@@ -6,3 +6,7 @@ hw_all.json
 _*.png
 __pycache__/
 *.pyc
+# 临时验证产物 (mp4 出片 / ass 字幕草稿 / 工具 stderr, 可复现)
+*.mp4
+_*.ass
+_tth_err.txt

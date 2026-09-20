@@ -1,0 +1,20 @@
+{
+  "name": "aikota-C",
+  "version": "1.0",
+  "route": "C GB2312 L1",
+  "chars": 3755,
+  "files": {
+    "aikota-c-l1.ttf": {
+      "size": 1470744,
+      "sha256": "bfaa4f967e57977fbf6a509d27d1c68e2d0efb075d0e256bd2cc623720ab7540"
+    },
+    "aikota-c-l1_hinted.ttf": {
+      "size": 2651564,
+      "sha256": "da68570395edd940d5d49d99472b23e7c33f025ca1db1d3f39ad8d5339c5aa7b"
+    },
+    "aikota-c-l1.woff2": {
+      "size": 878132,
+      "sha256": "f937ea05a81e4973befba22697c45046c3a8e89eb52b4b63cdd13d4924f6e62e"
+    }
+  }
+}

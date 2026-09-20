@@ -1,0 +1,20 @@
+{
+  "name": "aikota-C",
+  "version": "1.0",
+  "route": "C brush shape",
+  "chars": 350,
+  "files": {
+    "aikota-c350.ttf": {
+      "size": 141608,
+      "sha256": "da9aa92333d5ea7ada709685791e2e94d2ffe97ee8fc8f8e23ba97cb087def37"
+    },
+    "aikota-c350_hinted.ttf": {
+      "size": 253464,
+      "sha256": "2c17770ebeb51f563424220685715958ef9da61f534915093fb2a21f66e5978a"
+    },
+    "aikota-c350.woff2": {
+      "size": 101772,
+      "sha256": "43ba63f9825d0f3a82a3fa8668fdaaaeeddca7d890c4eb16c0a97756ec4a70ba"
+    }
+  }
+}

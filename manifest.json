@@ -1,0 +1,20 @@
+{
+  "name": "aikota-B",
+  "version": "0.3",
+  "route": "B (self-developed skeleton)",
+  "chars": 350,
+  "files": {
+    "aikota350.ttf": {
+      "size": 65752,
+      "sha256": "f5eaf4d8beeaef268738f90cc7c62deaf9e942a23f9a864dee50c0030d26b8bf"
+    },
+    "aikota350_hinted.ttf": {
+      "size": 108024,
+      "sha256": "3040cd5be5abd9a6f092bd11dcebf6ed19f2434ac936302cbd7809ba2f44c9f2"
+    },
+    "aikota350.woff2": {
+      "size": 49016,
+      "sha256": "fbbe74593f585dc1db957160cf0a47b4598358a9212616630098b109daf7ed64"
+    }
+  }
+}

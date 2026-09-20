@@ -1,0 +1,48 @@
+=== 日 (U+65E5) 4 strokes, medians 4 ===
+  stroke0: pts(284,684)->(302,70) len= 614 ang=-88 deg mid=(293, 377)
+  stroke1: pts(359,660)->(688,37) len= 704 ang=-62 deg mid=(523, 348)
+  stroke2: pts(357,413)->(581,431) len= 224 ang=  4 deg mid=(469, 422)
+  stroke3: pts(340,106)->(632,143) len= 294 ang=  7 deg mid=(486, 124)
+=== 口 (U+53E3) 3 strokes, medians 3 ===
+  stroke0: pts(229,584)->(348,152) len= 448 ang=-74 deg mid=(288, 368)
+  stroke1: pts(304,569)->(661,273) len= 463 ang=-39 deg mid=(482, 421)
+  stroke2: pts(369,185)->(744,224) len= 377 ang=  5 deg mid=(556, 204)
+=== 山 (U+5C71) 3 strokes, medians 3 ===
+  stroke0: pts(472,748)->(493,208) len= 540 ang=-87 deg mid=(482, 478)
+  stroke1: pts(196,398)->(788,237) len= 613 ang=-15 deg mid=(492, 317)
+  stroke2: pts(810,490)->(798,57) len= 433 ang=-91 deg mid=(804, 273)
+=== 水 (U+6C34) 4 strokes, medians 4 ===
+  stroke0: pts(473,814)->(358,98) len= 725 ang=-99 deg mid=(415, 456)
+  stroke1: pts(147,491)->(113,110) len= 382 ang=-95 deg mid=(130, 300)
+  stroke2: pts(737,682)->(590,452) len= 272 ang=-122 deg mid=(663, 567)
+  stroke3: pts(539,500)->(990,185) len= 550 ang=-34 deg mid=(764, 342)
+=== 木 (U+6728) 4 strokes, medians 4 ===
+  stroke0: pts(228,534)->(766,574) len= 539 ang=  4 deg mid=(497, 554)
+  stroke1: pts(453,825)->(486,-29) len= 854 ang=-87 deg mid=(469, 398)
+  stroke2: pts(474,519)->(130,124) len= 523 ang=-131 deg mid=(302, 321)
+  stroke3: pts(528,513)->(951,159) len= 551 ang=-39 deg mid=(739, 336)
+=== 月 (U+6708) 4 strokes, medians 4 ===
+  stroke0: pts(339,773)->(145,17) len= 780 ang=-104 deg mid=(242, 395)
+  stroke1: pts(415,764)->(538,104) len= 671 ang=-79 deg mid=(476, 434)
+  stroke2: pts(417,542)->(588,564) len= 172 ang=  7 deg mid=(502, 553)
+  stroke3: pts(399,368)->(588,392) len= 190 ang=  7 deg mid=(493, 380)
+=== 国 (U+56FD) 8 strokes, medians 8 ===
+  stroke0: pts(216,745)->(224,25) len= 720 ang=-89 deg mid=(220, 385)
+  stroke1: pts(291,684)->(823,1) len= 865 ang=-52 deg mid=(557, 342)
+  stroke2: pts(369,565)->(663,599) len= 295 ang=  6 deg mid=(516, 582)
+  stroke3: pts(359,390)->(643,409) len= 284 ang=  3 deg mid=(501, 399)
+  stroke4: pts(478,546)->(489,254) len= 292 ang=-87 deg mid=(483, 400)
+  stroke5: pts(318,208)->(713,231) len= 395 ang=  3 deg mid=(515, 219)
+  stroke6: pts(657,375)->(745,302) len= 114 ang=-39 deg mid=(701, 338)
+  stroke7: pts(257,50)->(772,98) len= 517 ang=  5 deg mid=(514, 74)
+=== 天 (U+5929) 4 strokes, medians 4 ===
+  stroke0: pts(326,698)->(727,744) len= 403 ang=  6 deg mid=(526, 721)
+  stroke1: pts(179,421)->(839,472) len= 661 ang=  4 deg mid=(509, 446)
+  stroke2: pts(438,664)->(134,63) len= 673 ang=-116 deg mid=(286, 363)
+  stroke3: pts(505,431)->(947,35) len= 593 ang=-41 deg mid=(726, 233)
+=== 土 (U+571F) 3 strokes, medians 3 ===
+  stroke0: pts(283,438)->(741,485) len= 460 ang=  5 deg mid=(512, 461)
+  stroke1: pts(461,760)->(476,153) len= 607 ang=-88 deg mid=(468, 456)
+  stroke2: pts(129,99)->(922,129) len= 793 ang=  2 deg mid=(525, 114)
+=== 一 (U+4E00) 1 strokes, medians 1 ===
+  stroke0: pts(121,393)->(920,401) len= 799 ang=  0 deg mid=(520, 397)
