@@ -1,0 +1,8 @@
+# 数据源 (体积大, 不进仓)
+hw_all.json
+# 编译产物 / 中间渲染图 (*.ttf/*.woff2/对比图 由仓内源码可复现)
+*.ttf
+*.woff2
+_*.png
+__pycache__/
+*.pyc
