@@ -1,0 +1,3 @@
+radical-prefixed chars: 4/350
+sample: 阿←阝 贝←贝 补←衤 车←车
+counts: {'阝': 1, '贝': 1, '衤': 1, '车': 1}
