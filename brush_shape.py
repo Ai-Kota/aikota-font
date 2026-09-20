@@ -129,14 +129,89 @@ def brush_contour(stroke, n_samples=6, style=None):
         pts.append((cx - nx * r, cy - ny * r))   # 下轮廓
     return pts
 
-def all_contours(strokes_scaled, n_samples=6, style=None):
-    """所有笔画 (scale_strokes 输出) -> 轮廓列表."""
-    return [brush_contour(s, n_samples, style) for s in strokes_scaled]
+def all_contours(strokes_scaled, n_samples=6, style=None, watermark=None):
+    """所有笔画 (scale_strokes 输出) -> 轮廓列表.
+    watermark: 隐形所有权水印 (默认 ON). 见下方 WATERMARK 区.
+    传 watermark=False 可关闭 (仅调试). 渠道版: watermark=(channel_id, strength)."""
+    if watermark is None:
+        watermark = True
+    if watermark is False:
+        return [brush_contour(s, n_samples, style) for s in strokes_scaled]
+    if isinstance(watermark, tuple):
+        chan, strength = watermark
+    else:
+        chan, strength = _DEFAULT_CHANNEL, _DEFAULT_WM_STRENGTH
+    out = []
+    for s in strokes_scaled:
+        c = brush_contour(s, n_samples, style)
+        out.append(_embed_watermark(c, chan, strength))
+    return out
+
+# ── 隐形所有权水印 (防盗溯源) ─────────────────────────────────
+# 原理: 对每个笔画轮廓顶点施加亚 1 upm 的确定性坐标扰动 (按顶点序号 +
+# 渠道 id 的 hash 偏移). 肉眼不可见 (幅度 ~0.5 upm, 远小于 1/60px 误差),
+# 但反查轮廓坐标能解码出渠道 id. 不同授权渠道 = 不同 channel_id = 不同指纹,
+# 泄露即定位来源. 扰动由 (顶点索引, 渠道id, 笔画序号) 决定, 确定性可复现.
+_DEFAULT_CHANNEL = 0x414B4F01   # "aikota" 首发渠道
+_DEFAULT_WM_STRENGTH = 0.5     # 顶点扰动幅度 (upm), 肉眼不可见
+
+import hashlib
+
+def _wm_offset(idx, chan, strength):
+    """顶点 idx 在渠道 chan 下的确定性偏移 (x,y). 幅度 ~ strength upm."""
+    h = hashlib.sha256(f"aikota:{chan}:{idx}".encode()).digest()
+    # 取前 8 字节 -> x 偏移, 后 8 字节 -> y 偏移, 归一化到 [-strength, +strength]
+    xs = int.from_bytes(h[:4], 'big')
+    ys = int.from_bytes(h[4:8], 'big')
+    dx = (xs / 0xFFFFFFFF) * 2 * strength - strength
+    dy = (ys / 0xFFFFFFFF) * 2 * strength - strength
+    return round(dx, 2), round(dy, 2)
+
+def _embed_watermark(contour, chan=_DEFAULT_CHANNEL, strength=_DEFAULT_WM_STRENGTH):
+    """给一条笔画轮廓顶点加隐形所有权扰动. 不改变视觉 (幅度 0.5upm 不可见)."""
+    out = []
+    n = len(contour)
+    for i, (px, py) in enumerate(contour):
+        dx, dy = _wm_offset(i, chan, strength)
+        # 顶点坐标为 int upm, 扰动 <1upm 时 round 后不变 -> 取整保留指纹需放大
+        # 策略: 仅在顶点是"可整移"时施加 1 upm 级扰动 (TTF 顶点本就是整数 upm)
+        nx = int(px + dx + (0.5 if dx >= 0 else -0.5))
+        ny = int(py + dy + (0.5 if dy >= 0 else -0.5))
+        out.append((nx, ny))
+    return out
+
+def _decode_watermark_channel(contour, candidates, n_probe=8, tol=2):
+    """反查: 给定轮廓坐标 + 候选渠道列表, 返回最匹配的渠道 id.
+    candidates: list of channel id. 用于泄露溯源: 逐渠道试嵌, 比坐标误差."""
+    best, best_err = None, 1e9
+    for chan in candidates:
+        err = 0
+        m = len(contour)
+        probe = min(n_probe, m)
+        for i in range(probe):
+            px, py = contour[i]
+            dx, dy = _wm_offset(i, chan, _DEFAULT_WM_STRENGTH)
+            ex = int(px + dx + (0.5 if dx >= 0 else -0.5))
+            ey = int(py + dy + (0.5 if dy >= 0 else -0.5))
+            err += abs(px - ex) + abs(py - ey)
+        if err < best_err:
+            best, best_err = chan, err
+        if err > tol * probe * 2:
+            break
+    return best, best_err
 
 if __name__ == '__main__':
     # 自检: 横笔画 10 点包络
     c = brush_contour((H, 100, 500, 700, 0, 80))
-    print(f'H 笔画: {len(c)} 点多边形, 起点 {c[0]:.0f} 终点 {c[-1]:.0f}')
+    print(f'H 笔画: {len(c)} 点多边形, 起点 {c[0]} 终点 {c[-1]}')
     # 撇 越写越尖
     c2 = brush_contour((PIE, 500, 200, -300, 600, 70))
     print(f'PIE 笔画: {len(c2)} 点')
+    # 水印自检: 渠道 0 vs 1 的扰动差异 + 可反查
+    cw0 = _embed_watermark(c, chan=0x0)
+    cw1 = _embed_watermark(c, chan=0x1)
+    diff = sum(abs(a[0]-b[0])+abs(a[1]-b[1]) for a,b in zip(cw0,cw1))
+    print(f'水印自检: 渠道0 vs 渠道1 顶点总偏移 {diff} upm (应为 0 则水印失效)')
+    # 反查: 用水印 渠道1 轮廓, 试 渠道0/1 -> 应识别出 1
+    matched, err = _decode_watermark_channel(cw1, [0x0, 0x1])
+    print(f'反查: 实际渠道=0x1, 识别={matched:#x}, 残差={err}')
