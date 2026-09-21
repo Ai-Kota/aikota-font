@@ -10,3 +10,8 @@ __pycache__/
 *.mp4
 _*.ass
 _tth_err.txt
+# 临时 API 探测 + 调试对比图 (不进仓)
+_ak_repos.json
+_repos.json
+cmp_8char.png
+min8.png

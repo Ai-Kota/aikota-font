@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-aikota-font · C 路线 GB2312 一级 3755 字生成器 (曲线笔形, 成品字体)
+aikota-font · C 路线 GB2312 一级 6763 字生成器 (曲线笔形, 成品字体)
 ================================================================
 复用 gen_c350.py 的 C 路线引擎 (brush_shape 14点包络 + 部件几何均值 + 摆位),
-字表换成 GB2312 L1 3755. 出成 aikota-c-l1.ttf (C 路线全量成品).
+字表换成 GB2312 L1 6763. 出成 aikota-c-gb.ttf (C 路线全量成品).
 跑法: python gen_c_l1.py
 """
 import sys, os, math, json, io, time
@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 data = json.load(open('E:/AImlyForge/scratch/cjk-font-foundry/hw_all.json', encoding='utf-8'))
-chars = list(open(os.path.join(HERE, 'gb2312_l1.txt'), encoding='utf-8').read().strip())
+chars = list(open(os.path.join(HERE, '../data', 'gb2312_all.txt'), encoding='utf-8').read().strip())
 
 from layout import part_box, scale_strokes, UPM, BASELINE, TOP
 from brush_shape import all_contours
@@ -78,8 +78,8 @@ def build_ttf(path):
     fb.setupNameTable({
         'familyName': 'aikota-C', 'styleName': 'GB2312-L1',
         'fullName': 'aikota-C GB2312 L1 (C-route brush shape, self-developed)',
-        'psName': 'aikota-C-L1', 'version': 'Version 1.0',
-        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. GB2312 L1 3755 chars.',
+        'psName': 'aikota-C-L1', 'version': 'Version 1.1',
+        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. GB2312 L1 6763 chars.',
     })
     from fontTools.ttLib.tables.O_S_2f_2 import Panose
     fb.setupOS2(sTypoAscender=880, sTypoDescender=120, usWinAscent=882, usWinDescent=120,
@@ -93,8 +93,8 @@ def build_ttf(path):
     return ok, miss
 
 if __name__ == '__main__':
-    out = os.path.join(HERE, 'aikota-c-l1.ttf')
+    out = os.path.join(HERE, 'aikota-c-gb.ttf')
     ok, miss = build_ttf(out)
-    io.open(os.path.join(HERE, '_c_l1_summary.txt'), 'w', encoding='utf-8').write(
+    io.open(os.path.join(HERE, '_c_gb_summary.txt'), 'w', encoding='utf-8').write(
         f'total {len(chars)}  ok {ok}  fallback-missing {miss}\n')
     print(f'wrote {out}  ({len(chars)} chars, ok={ok}, fallback={miss})')

@@ -12,7 +12,7 @@ import json, math, io, os, collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 data = json.load(open('E:/AImlyForge/scratch/cjk-font-foundry/hw_all.json', encoding='utf-8'))
-chars = open(os.path.join(HERE, '350chars.txt'), encoding='utf-8').read().split()
+chars = open(os.path.join(HERE, '../data', '350chars.txt'), encoding='utf-8').read().split()
 
 def stroke_geo(v):
     out = []

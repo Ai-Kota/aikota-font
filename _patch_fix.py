@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 data = json.load(open('E:/AImlyForge/scratch/cjk-font-foundry/hw_all.json', encoding='utf-8'))
-chars = open(os.path.join(HERE, '350chars.txt'), encoding='utf-8').read().split()
+chars = open(os.path.join(HERE, 'data', '350chars.txt'), encoding='utf-8').read().split()
 
 from layout import part_box, scale_strokes, UPM, BASELINE, TOP, GAP, NARROW_PARTS
 

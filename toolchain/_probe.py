@@ -2,7 +2,7 @@
 """探针: 检查部件码点匹配 (避免 shell 转义干扰), 统计 350 字部件覆盖"""
 import unicodedata, io
 
-chars = open('E:/AImlyForge/scratch/aikota-font/350chars.txt', encoding='utf-8').read().split()
+chars = open(os.path.join(os.path.dirname(__file__), '../data/350chars.txt'), encoding='utf-8').read().split()
 
 # 部件名 → 码点列表 (按 Unicode 字形; 氵 等 3 画部件是单个码点)
 RAD = {

@@ -17,7 +17,7 @@ import json, math, io, collections, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 data = json.load(open('E:/AImlyForge/scratch/cjk-font-foundry/hw_all.json', encoding='utf-8'))
-chars = open(os.path.join(HERE, '350chars.txt'), encoding='utf-8').read().split()
+chars = open(os.path.join(HERE, '../data', '350chars.txt'), encoding='utf-8').read().split()
 
 # 部件识别: 手工标注的 部件→码点特征 (按 汉字结构常识).
 # 格式: part_name -> { 'detect': 码点集合(字含其中任一即视为含此部件), 'strokes': [笔序...] }

@@ -1,81 +1,116 @@
 # aikota-font · 爱成
 
-**aikota (爱成)** 是一套可直接使用的中文开源字体库 + 自研笔形引擎。
-4 种风格 · GB2312 全量 6763 字 · 曲线笔形 · hinting 优化。
+**aikota (爱成)** 中文开源字体库。4 种风格 · GB2312 全量 6763 字 · 曲线笔形 · 内置 hinting。
 
-## 直接拿来用（无需任何构建）
+> 这是**字体库**，clone 下来直接用 `fonts/` 里的 TTF/WOFF2 即可，**无需构建、无需 Python**。
+> 仓里的 `toolchain/`（生成器）是"制作这些字体的工具"，普通用户可完全忽略。
 
-字体文件在 `fonts/` 目录，clone 后即可使用：
+---
 
-| 风格 | 文件 | 特征 | 适用 |
+## 一、直接用（最常用）
+
+字体文件都在 `fonts/`，按场景选：
+
+| 风格 | 文件 | 特征 | 适合 |
 |---|---|---|---|
-| 楷体 | `fonts/aikota-c-kaiso.ttf` | 起尖收顿，书法笔锋 | 正文字幕（默认） |
-| 瘦金体 | `fonts/aikota-c-shouljin.ttf` | 细劲笔锋 | 文艺/古典 |
-| 圆体 | `fonts/aikota-c-yuan.ttf` | 圆头笔画 | 卡通/儿童 |
-| 美术字 | `fonts/aikota-c-art.ttf` | 方正粗体 | 标题/封面 |
+| 楷体 | `fonts/aikota-c-kaiso.ttf` / `.woff2` | 起尖收顿，书法笔锋 | 正文字幕（默认） |
+| 瘦金体 | `fonts/aikota-c-shouljin.ttf` / `.woff2` | 细劲笔锋 | 文艺 / 古典 |
+| 圆体 | `fonts/aikota-c-yuan.ttf` / `.woff2` | 圆头笔画 | 卡通 / 儿童 |
+| 美术字 | `fonts/aikota-c-art.ttf` / `.woff2` | 方正粗体 | 标题 / 封面 |
 
-每个风格都有 `.ttf`（文档/视频）和 `.woff2`（网页）两种格式。
+每个风格都有 `.ttf`（桌面文档/视频）和 `.woff2`（网页）两种。
 
-### 网页嵌入
+### 1. 安装到系统（Windows / macOS / Linux）
+
+把 `fonts/*.ttf` 拷进系统字体目录，安装后任意应用可选：
+
+```bash
+# Windows
+copy fonts\*.ttf C:\Windows\Fonts\
+# macOS
+cp fonts/*.ttf ~/Library/Fonts/
+# Linux
+cp fonts/*.ttf ~/.local/share/fonts/ && fc-cache -fv
+```
+
+安装后字体族名：`aikota-C-Kai` / `aikota-C-Shoujin` / `aikota-C-Yuan` / `aikota-C-Art`。
+
+### 2. 网页嵌入（WOFF2）
 
 ```html
 <link rel="stylesheet" href="fonts/aikota-c-kaiso.woff2">
 ```
 
-### 字幕烧录（ffmpeg/libass）
+或自托管：
 
-ASS 字幕 `Fontname` 填 `aikota-c-kaiso`（字体 basename，无扩展名）。
-
-### 安装到系统
-
-把 `fonts/*.ttf` 拷入系统字体目录（Windows: `C:\Windows\Fonts`），
-安装后即可在任何应用里选 `aikota-C-Kai` / `aikota-C-Shoujin` 等族名。
-
-## 许可
-
-**aikota B/C 路线字体为自研字体**，许可见 [EULA.md](EULA.md)：
-
-- 允许：个人/商业免费使用、嵌入文档视频网页、修改派生
-- 禁止：字体文件单独作为商品出售
-- 派生作品须保留本声明
-
-> 与 Arphic/A 路线（文鼎楷书数据，Arphic Public License）区分：
-> 本库**不依赖** Arphic 轮廓数据，轮廓由本引擎自有算法生成。
-
-## 知识产权（第一性原理边界）
-
-| 层 | 性质 | 权利 |
-|---|---|---|
-| 汉字结构 / 部件拆分 | 公共知识 | 无版权 |
-| 笔画几何事实（位置/角度/长度） | 公共信息 | 无版权 |
-| **笔形 taper 算法** (`brush_shape.py`) | **自有表达** | 自有 IP |
-| **摆位公式** (`layout.py`) | **自有表达** | 自有 IP |
-| 字体文件（TTF/WOFF2 轮廓） | 本引擎输出 | 自有 IP |
-
-**证据链**：本仓 git 历史（commit 时间戳 + 代码演进）即版权证据。
-- `f09e208` 核心引擎（brush_shape + layout + 4 风格生成器）
-- `f914494` 完整源码链 + 校准数据 + SHA256 清单
-
-## 目录
-
-```
-fonts/                  字体库本体（直接可用）
-brush_shape.py          曲线笔形引擎（4 风格 taper）
-layout.py               摆位公式
-radicals.py             部件骨架坐标
-_patch_fix.py           几何均值 + 笔画类型管线
-gen_c_gb_styles.py      4 风格全量生成器
-manifest_*.json         SHA256 校验清单
-EULA.md                 许可协议
-hw_all.json             (gitignore, 生成器数据源, 用户用 fonts/ 无需此文件)
+```css
+@font-face {
+  font-family: 'aikota-kaiso';
+  src: url('fonts/aikota-c-kaiso.woff2') format('woff2');
+  font-display: swap;
+}
+body { font-family: 'aikota-kaiso', sans-serif; }
 ```
 
-## 重新生成字体（可选）
+### 3. 短视频字幕（ffmpeg / libass）
+
+ASS 字幕的 `Fontname` 填**字体 basename（无扩展名）**：
+
+```bash
+ffmpeg -i input.mp4 -vf "subtitles=sub.ass:fontsdir=<fonts/ 路径>" output.mp4
+```
+
+ASS 示例（60px 字幕，9:16 短视频）：
+
+```
+[V4+ Styles]
+Style: Default, aikota-c-kaiso, 60, &H00FFFFFF, &H00000000, 3, 0, 2
+```
+
+### 4. 文档 / 设计软件
+
+把 `fonts/*.ttf` 拖进 Word / Figma / PS / 剪映等，或拷入系统字体目录后直接选族名。
+
+---
+
+## 二、许可与所有权
+
+- **免费使用**（个人 + 商业），可嵌入分发、可派生修改。
+- **禁止**：单独把字体文件当商品卖；去除 / 伪造版权声明。
+- 完整条款见 [LICENSE](LICENSE) / [EULA.md](EULA.md)。
+- 字体内置**隐形所有权水印**（坐标级指纹，肉眼不可见），用于泄露溯源。
+
+---
+
+## 三、重新生成字体（可选，开发者）
+
+普通用户跳过这一节。仓的 `toolchain/` 是字体**生成工具**（不是字体库本身）：
 
 ```bash
 pip install fonttools
-# 需数据源 hw_all.json (生成器依赖)
-python gen_c_gb_styles.py
+python toolchain/gen_c_gb_styles.py   # 重新生成 4 风格 GB2312 全量
 ```
 
-普通使用者直接用 `fonts/` 里的成品即可，无需重新生成。
+> 生成器依赖数据源 `hw_all.json`（不在仓内，见 `.gitignore`）。
+> 直接使用者**不需要**这步 —— `fonts/` 里的成品已带水印，开箱即用。
+
+### 仓目录
+
+```
+fonts/      字体库本体（直接使用）
+LICENSE     自定义字体许可（所有权保留 + 有限使用）
+EULA.md     版权保留条款
+RELEASE.md  发版声明 + 版本时间线
+brush_shape.py / layout.py / radicals.py / _patch_fix.py   笔形引擎（自有 IP 核心）
+toolchain/  生成器 + 校准 + 探针（开发工具，可忽略）
+data/       字表 + SHA256 清单 + 校准数据
+```
+
+---
+
+## 四、快速核对
+
+- 字数：GB2312 全量 6763 / 风格
+- 格式：TTF + WOFF2（woff2 浏览器兼容）
+- 权重：regular（hinting 优化，60px 场景 PPEM 16–72）
+- 版权：权利人独有，见 LICENSE

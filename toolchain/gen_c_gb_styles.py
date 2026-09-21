@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 data = json.load(open('E:/AImlyForge/scratch/cjk-font-foundry/hw_all.json', encoding='utf-8'))
-chars = list(open(os.path.join(HERE, 'gb2312_all.txt'), encoding='utf-8').read().strip())
+chars = list(open(os.path.join(HERE, '../data', 'gb2312_all.txt'), encoding='utf-8').read().strip())
 
 from layout import part_box, scale_strokes, UPM, BASELINE, TOP
 from brush_shape import all_contours, _DEFAULT_WM_STRENGTH

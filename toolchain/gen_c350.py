@@ -1,22 +1,23 @@
 # -*- coding: utf-8 -*-
 """
-aikota-font · C 路线 GB2312 一级 6763 字生成器 (曲线笔形, 成品字体)
+aikota-font · C 路线 350 全量生成器 (曲线笔形, 成品字体)
 ================================================================
-复用 gen_c350.py 的 C 路线引擎 (brush_shape 14点包络 + 部件几何均值 + 摆位),
-字表换成 GB2312 L1 6763. 出成 aikota-c-gb.ttf (C 路线全量成品).
-跑法: python gen_c_l1.py
+B 路线骨架 (部件拆分 + 几何均值 + 摆位) -> C 路线 brush_shape 曲线 taper
+-> TTF (楷体笔锋风格). 出成 aikota-c350.ttf (成品).
+跑法: python gen_c350.py
 """
-import sys, os, math, json, io, time
+import sys, os, math, json, io
 sys.path.insert(0, os.path.dirname(__file__))
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 data = json.load(open('E:/AImlyForge/scratch/cjk-font-foundry/hw_all.json', encoding='utf-8'))
-chars = list(open(os.path.join(HERE, 'gb2312_all.txt'), encoding='utf-8').read().strip())
+chars = open(os.path.join(HERE, '../data', '350chars.txt'), encoding='utf-8').read().split()
 
 from layout import part_box, scale_strokes, UPM, BASELINE, TOP
-from brush_shape import all_contours
-from _patch_fix import part_geo_mean, to_rad, COMP
+from brush_shape import all_contours, H, V, PIE, NA, DIAN
+from _patch_fix import part_geo_mean, to_rad, COMP, stroke_geo
 
+# 部件几何缓存 (复用 _patch_fix 的均值 + 类型判定)
 _PART_CACHE = {}
 def part_strokes(part):
     if part in _PART_CACHE:
@@ -27,6 +28,7 @@ def part_strokes(part):
     return out
 
 def glyph_contours(ch):
+    """C 路线: 摆位 -> brush 曲线包络 (14 点/笔)."""
     struct, parts = COMP.get(ch, ('O', [ch]))
     boxes = part_box(struct, parts, 0, BASELINE, UPM, TOP - BASELINE)
     contours = []
@@ -41,7 +43,6 @@ def build_ttf(path):
     from fontTools.fontBuilder import FontBuilder
     from fontTools.ttLib.tables._g_l_y_f import Glyph
     from fontTools.pens.ttGlyphPen import TTGlyphPen
-    t0 = time.time()
     names = ['.notdef']
     cmap = {0: '.notdef'}
     glyf = {}
@@ -49,7 +50,7 @@ def build_ttf(path):
     g0.xMin = g0.yMin = g0.xMax = g0.yMax = 0
     glyf['.notdef'] = g0
     ok = miss = 0
-    for i, ch in enumerate(chars):
+    for ch in chars:
         cp = ord(ch)
         gn = f'u{cp:04X}'
         names.append(gn); cmap[cp] = gn
@@ -66,8 +67,6 @@ def build_ttf(path):
                     pen.lineTo(p)
                 pen.closePath()
             ok += 1
-        if (i + 1) % 500 == 0:
-            print(f'  progress {i+1}/{len(chars)}')
         glyf[gn] = pen.glyph()
     fb = FontBuilder(UPM, isTTF=True)
     fb.setupGlyphOrder(names)
@@ -76,10 +75,10 @@ def build_ttf(path):
     fb.setupHorizontalMetrics({g: (UPM, 0) for g in names})
     fb.setupHorizontalHeader(ascent=880, descent=120)
     fb.setupNameTable({
-        'familyName': 'aikota-C', 'styleName': 'GB2312-L1',
-        'fullName': 'aikota-C GB2312 L1 (C-route brush shape, self-developed)',
-        'psName': 'aikota-C-L1', 'version': 'Version 1.1',
-        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. GB2312 L1 6763 chars.',
+        'familyName': 'aikota-C', 'styleName': 'Kai',
+        'fullName': 'aikota-C 350 (C-route brush shape, self-developed)',
+        'psName': 'aikota-C-350', 'version': 'Version 1.0',
+        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. 350 common chars.',
     })
     from fontTools.ttLib.tables.O_S_2f_2 import Panose
     fb.setupOS2(sTypoAscender=880, sTypoDescender=120, usWinAscent=882, usWinDescent=120,
@@ -89,12 +88,11 @@ def build_ttf(path):
     fb.setupPost(isFixedPitch=1)
     fb.setupHead(fontRevision=1.0, created=3937000000, modified=3937000000)
     fb.save(path)
-    print(f'build time {time.time()-t0:.1f}s')
     return ok, miss
 
 if __name__ == '__main__':
-    out = os.path.join(HERE, 'aikota-c-gb.ttf')
+    out = os.path.join(HERE, 'aikota-c350.ttf')
     ok, miss = build_ttf(out)
-    io.open(os.path.join(HERE, '_c_gb_summary.txt'), 'w', encoding='utf-8').write(
+    io.open(os.path.join(HERE, '_c350_summary.txt'), 'w', encoding='utf-8').write(
         f'total {len(chars)}  ok {ok}  fallback-missing {miss}\n')
     print(f'wrote {out}  ({len(chars)} chars, ok={ok}, fallback={miss})')
