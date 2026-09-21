@@ -105,7 +105,7 @@ def build_ttf(path, style, name_cn, full_name):
         'familyName': name_cn, 'styleName': style,
         'fullName': full_name,
         'psName': f'aikota-C-{style}', 'version': 'Version 1.0',
-        'copyright': f'aikota font (C route) {style}: self-developed skeleton + brush taper. GB2312 full 6763 chars.',
+        'copyright': f'aikota font (C route) {style}: self-developed skeleton + brush taper. GB2312 full 6763 chars. Contributor: aikota',
     })
     from fontTools.ttLib.tables.O_S_2f_2 import Panose
     fb.setupOS2(sTypoAscender=880, sTypoDescender=120, usWinAscent=882, usWinDescent=120,

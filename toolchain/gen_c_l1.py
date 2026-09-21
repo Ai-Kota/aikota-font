@@ -79,7 +79,7 @@ def build_ttf(path):
         'familyName': 'aikota-C', 'styleName': 'GB2312-L1',
         'fullName': 'aikota-C GB2312 L1 (C-route brush shape, self-developed)',
         'psName': 'aikota-C-L1', 'version': 'Version 1.0',
-        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. GB2312 L1 3755 chars.',
+        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. GB2312 L1 3755 chars. Contributor: aikota',
     })
     from fontTools.ttLib.tables.O_S_2f_2 import Panose
     fb.setupOS2(sTypoAscender=880, sTypoDescender=120, usWinAscent=882, usWinDescent=120,

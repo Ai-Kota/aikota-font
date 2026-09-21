@@ -78,7 +78,7 @@ def build_ttf(path):
         'familyName': 'aikota-C', 'styleName': 'Kai',
         'fullName': 'aikota-C 350 (C-route brush shape, self-developed)',
         'psName': 'aikota-C-350', 'version': 'Version 1.0',
-        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. 350 common chars.',
+        'copyright': 'aikota font (C route): self-developed skeleton + brush taper. 350 common chars. Contributor: aikota',
     })
     from fontTools.ttLib.tables.O_S_2f_2 import Panose
     fb.setupOS2(sTypoAscender=880, sTypoDescender=120, usWinAscent=882, usWinDescent=120,
